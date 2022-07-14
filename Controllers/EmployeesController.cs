@@ -57,9 +57,9 @@ namespace ASPdotNETMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.tEmployees.Where(x => x.Email == employee.Email || x.PhoneNumber == x.PhoneNumber).Count() > 0)
+                if (_db.tEmployees.Where(x => x.Email == employee.Email || x.PhoneNumber == employee.PhoneNumber).Count() > 0)
                 {
-                    TempData["pesan"] = "Email or Phone Number Already Exist";
+                    TempData["pesan"] = "Email or Phone Number Already Exist =" + employee.Email ;
                     return RedirectToAction("Create", "Employees");
                 }
 
@@ -96,6 +96,12 @@ namespace ASPdotNETMVC.Controllers
             if (id != employee.EmployeeId)
             {
                 return NotFound();
+            }
+
+            if (_db.tEmployees.Where(x => x.Email == employee.Email || x.PhoneNumber == x.PhoneNumber).Count() > 0)
+            {
+                TempData["pesan"] = "Email or Phone Number Already Exist";
+                return RedirectToAction("Edit", "Employees");
             }
 
             if (ModelState.IsValid)
